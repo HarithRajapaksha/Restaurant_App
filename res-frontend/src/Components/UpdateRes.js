@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import { useState,useEffect} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 
 function UpdateRes() {
@@ -28,8 +29,23 @@ function UpdateRes() {
         
         axios.put(`http://localhost:8000/resturant/update/${id}`,updatedData).then((res) => {
             console.log(" Data Updated "+res);
+
+            Swal.fire({
+              icon: "success",
+              title: "Data Updated",
+              text: "Data Updated Successfully",
+            });
+
         }).catch((err) => {
             console.log(" Data not Updated "+err);
+
+            Swal.fire({
+              icon: "error",
+              title: "Opps!",
+              text: "Data Update Failed",
+            });
+
+
         })
     }
 
@@ -38,6 +54,10 @@ function UpdateRes() {
         axios.get(`http://localhost:8000/resturant/get/${id}`).then((res) => {
             console.log(" Data get "+res);
             setOneData(res.data)
+            setName(res.data.name)
+            setPhone(res.data.phone)
+            setAddr(res.data.address)
+
         }).catch((err) => {
             console.log(" Data not get "+err);
         })

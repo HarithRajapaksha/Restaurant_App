@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 
 
@@ -25,8 +26,22 @@ function AddRestuarant() {
 
         axios.post('http://localhost:8000/resturant/add',restData).then((res) => {
             console.log(" Data Added "+res);
+
+            Swal.fire({
+              icon: "success",
+              title: "Data Added",
+              text: "Data Added Successfully",
+            });
+
         }).catch((err) => {
             console.log(" Data not Added "+err);
+
+            Swal.fire({
+              icon: "error",
+              title: "Opps!",
+              text: "Data Added Failed",
+            });
+
         })
     }
 
@@ -59,7 +74,17 @@ function AddRestuarant() {
             <Button variant="primary" type="submit" onClick={submit} className="flex justify-center">
               Submit
             </Button>
+
+            <div className="m-1"></div>
+
+            <a href='/allData'>
+    <Button variant="primary" className="flex justify-center">
+        View Restaurants
+    </Button>
+</a>
+
           </div>
+
         </Form>
       </Card.Text>
     </Card.Body>

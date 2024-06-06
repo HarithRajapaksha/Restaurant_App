@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
+import Swal from 'sweetalert2'
 
 
 function ShowAllRes() {
@@ -25,15 +26,30 @@ useEffect(()=>{
 },[])
 
 
-const RestDelete=(id)=>{
+const RestDelete = (id) => {
+  axios.delete(`http://localhost:8000/resturant/delete/${id}`)
+      .then((res) => {
+          console.log("Data Deleted", res);
 
-    axios.delete(`http://localhost:8000/resturant/delete/${id}`).then((res) => {
-        console.log(" Data Deleted "+res);
-    }).catch((err) => {
-        console.log(" Data not Deleted "+err);
-    })
-}
+          Swal.fire({
+              icon: "success",
+              title: "Data Deleted",
+              text: "Data Deleted Successfully",
+          }).then(() => {
+              window.location.reload();
+          });
 
+      })
+      .catch((err) => {
+          console.log("Data not Deleted", err);
+
+          Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Data Deletion Unsuccessful",
+          });
+      });
+};
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
